@@ -1,0 +1,82 @@
+,Name,Class,Classification,Colour,Eye,Native,Size
+0,Acromantula,Acromantula,XXXXX,Jet-Black,Black,Island of Borneo,180.0
+1,Basilisk,Basilisk,XXXXX,Green,Yellow,Greece,600.0
+2,Chimaera,Chimaera,XXXXX,Golden,White,Greece,
+3,Antipodean Opaleye,Dragon,XXXXX,Pearly,Multi-coloured,New Zealand,
+4,Chinese Fireball,Dragon,XXXXX,Scarlet,Yellow,China,300.0
+5,Common Welsh Green,Dragon,XXXXX,Green,No data,Wales,216.0
+6,Hebridean Black,Dragon,XXXXX,Dark,Brilliant purple,Scotland,360.0
+7,Hungarian Horntail,Dragon,XXXXX,Black,Yellow,Hungary,600.0
+8,Norwegian Ridgeback,Dragon,XXXXX,Dark green,No data,Norway,
+9,Peruvian Vipertooth,Dragon,XXXXX,Copper,No data,Peru,180.0
+10,Romanian Longhorn,Dragon,XXXXX,Dark green,No data,Romania,480.0
+11,Swedish Short-Snout,Dragon,XXXXX,Silvery blue,No data,Sweden,264.0
+12,Ukrainian Ironbelly,Dragon,XXXXX,Metallic grey-silver,Deep red,Ukraine,
+13,Lethifold,Lethifold,XXXXX,Black,No data,The tropics,
+14,Manticore,Manticore,XXXXX,Golden,No data,Greece,
+15,Nundu,Nundu,XXXXX,Yellow|Black,No data,East Africa,
+16,Quintaped,Quintaped,XXXXX,Red-brown,No data,Isle of Drear,
+17,Werewolf,Werewolf,XXXXX,Varies,Varies,World-wide,
+18,Centaur,Centaur,XXXX,Varies,Varies,Europe,
+19,Demiguise,Demiguise,XXXX,Beige|Silver,Brown,Far East,
+20,Erkling,Erkling,XXXX,Green,Yellow,Germany,36.0
+21,Erumpent,Erumpent,XXXX,Black,No data,Africa,
+22,Graphorn,Graphorn,XXXX,Greyish-purple,No data,Europe,
+23,Griffin,Griffin,XXXX,Brownish-yellow|White|Brown,Yellow,Greece,
+24,Kappa,Kappa,XXXX,Scaly,No data,Japan,
+25,Kelpie,Kelpie,XXXX,No data,No data,Great Britain|Ireland,
+26,Merpeople,Merpeople,XXXX,Varies,Varies,Greece,
+27,Occamy,Occamy,XXXX,Turquoise|Purple|Teal,No data,Far East|India,180.0
+28,Phoenix,Phoenix,XXXX,Scarlet|Golden,Black,Egypt|India|China,
+29,Re'em,Re'em,XXXX,Golden,No data,North America|Far East,
+30,Runespoor,Runespoor,XXXX,Orange|Black,No data,Africa,78.0
+31,Golden Snidget,Golden Snidget,XXXX,Golden,Red,No data,12.0
+32,Sphinx,Sphinx,XXXX,Brown,Hazel,Egypt,
+33,Tebo,Tebo,XXXX,Ashen,Brown,Congo,
+34,Thestral,Thestral,XXXX,Black,White,British Isles|France|Iberian Peninsula|Ireland,
+35,Troll,Troll,XXXX,Varies,Varies,Europe,144.0
+36,Unicorn,Unicorn,XXXX,White|Silver|Gold,No data,Europe,
+37,Yeti,Yeti,XXXX,Grey|White,No data,Tibet,180.0
+38,Ashwinder,Ashwinder,XXX,Pale-Grey,Red,World-wide,
+39,Billywig,Billywig,XXX,Bright blue,Grey,Australia,
+40,Bundimun,Bundimun,XXX,Green,Yellow,World-wide,
+41,Crup,Crup,XXX,White|Brown,Varies,World-wide,
+42,Doxy,Doxy,XXX,Purple|Brown|Black,No data,North America|Europe,
+43,Fire Crab,Fire Crab,XXX,Grey,Black,Fiji,
+44,Fwooper,Fwooper,XXX,Orange|Pink|Lime green|Yellow,,Africa,
+45,Glumbumble,Glumbumble,XXX,Grey,No data,Europe,
+46,Hippocampus,Hippocampus,XXX,Blue|Red,Varies,Greece,
+47,Hippogriff,Hippogriff,XXX,Stormy gray|Chestnut|Bronze|Pinkish roan|Inky black,Orange,Europe,
+48,Jarvey,Jarvey,XXX,Brown,Black,Great Britain|Ireland|North America,
+49,Knarl,Knarl,XXX,Brown,Black,Europe|North America,
+50,Kneazle,Kneazle,XXX,Varies,Varies,Great Britain,
+51,Leprechaun,Leprechaun,XXX,Green,No data,Ireland,
+52,Lobalug,Lobalug,XXX,Yellow,No data,North Sea,120.0
+53,Mackled Malaclaw,Mackled Malaclaw,XXX,Grey|Green,Black,Europe,12.0
+54,Moke,Moke,XXX,Silver green,No data,Great Britain|Ireland,10.0
+55,Murtlap,Murtlap,XXX,Beige,No data,Great Britain,
+56,Niffler,Niffler,XXX,Black,No data,Great Britain,
+57,Nogtail,Nogtail,XXX,No data,Black,Europe|Russia|North America|South America,
+58,Pixie,Pixie,XXX,Electric Blue,Black,England,8.0
+59,Plimpy,Plimpy,XXX,Yellowish,No data,World-wide,
+60,Pogrebin,Pogrebin,XXX,No data,No data,Russia,
+61,Red Cap,Red Cap,XXX,Green,Red,Europe,42.0
+62,Salamander,Salamander,XXX,Scarlet red,Black,World-wide,
+63,Sea serpent,Sea serpent,XXX,No data,No data,No data,
+64,Streeler,Streeler,XXX,Varies,No data,Africa,
+65,Augurey,Augurey,XX,Greenish-black,Blue,Great Britain|Ireland,
+66,Bowtruckle,Bowtruckle,XX,Green,Brown,England|Germany|Scandinavia,8.0
+67,Chizpurfle,Chizpurfle,XX,Brown|Green,Black,World-wide,0.05
+68,Clabbert,Clabbert,XX,Mottled green,Yellow,World-wide,
+69,Diricawl,Diricawl,XX,Bluish-pink,No data,Mauritius,
+70,Fairy,Fairy,XX,Varies,Varies,World-wide,3.0
+71,Ghoul,Ghoul,XX,Greyish green,Green,No data,
+72,Gnome,Gnome,XX,Brown|Lime,No data,Europe|North America,12.0
+73,Grindylow,Grindylow,XX,Sickly green,Yellow|White|Green,Great Britain|Ireland,60.0
+74,Imp,Imp,XX,Grey,Yellow,Great Britain|Ireland,7.0
+75,Jobberknoll,Jobberknoll,XX,Speckled blue,Black,Europe|North America,
+76,Mooncalf,Mooncalf,XX,Pink|Pale grey,Blue-green,World-wide,
+77,Porlock,Porlock,XX,Black|Red|Brown,Blue,England|Ireland,24.0
+78,Puffskein,Puffskein,XX,Custard,No data,No data,
+79,Flobberworm,Flobberworm,X,Brown,No data,No data,10.0
+80,Horklump,Horklump,X,Pink|Black,No data,Scandinavia,
