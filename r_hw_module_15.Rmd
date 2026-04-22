@@ -1,0 +1,174 @@
+
+## Задачи
+
+### Задача 1
+
+Загрузите данные из файла `marketing.csv` и сохраните их в датафрейм `marketing`.
+
+```{r}
+setwd("C:/Users/alimb/OneDrive/Рабочий стол/test")
+marketing <- read.csv('marketing.csv')
+```
+
+
+### Задача 2
+
+Используя библиотеку `tidyverse`, определите, сколько фирм использовали разные типы продвижения своей продукции (одно число для каждого типа).
+
+```{r}
+library(tidyverse)
+
+k_tip <- marketing %>% count(Promotion)
+k_tip
+```
+
+
+### Задача 3
+
+Используя библиотеку `ggplot2`, постройте столбчатую диаграмму, которая показывает, сколько фирм разного масштаба (крупный бизнес, средний бизнес, малый бизнес) представлено в данных. Каких фирм больше?
+
+```{r}
+ggplot(marketing, aes(MarketSize, fill = MarketSize)) + geom_bar()
+
+#Больше всего фирм со средним бизнесом
+```
+
+
+### Задача 4
+
+Используя библиотеку `ggplot2`, постройте ящики с усами для числа продаж по группам в зависимости от типа продвижения продукции. Разные ящики с усами должны находиться в пределах одного графика и быть разного цвета. Какой тип продвижения продукции, в целом, кажется более успешным? Обоснуйте свой ответ.
+
+```{r}
+marketing$Promotion <- as.factor(marketing$Promotion)
+ggplot(marketing, aes(x = Promotion, y = SalesInThousands, group = Promotion, fill = Promotion)) + 
+  geom_boxplot()
+
+#Promotion 1 кажется наиболее успешным, так как он имеет самую высокую медиану и более высокие продажи в среднем по сравнению с другими типами
+```
+
+
+### Задача 5
+
+Используя функции библиотеки `tidyverse`, выберите из датафрейма `marketing` строки, которые соответствуют фирмам, использующим тип продвижения 1 или 2. Сохраните их в датафрейм `one_two`.
+
+```{r}
+one_two <- marketing %>% filter(Promotion %in% c(1, 2))
+```
+
+
+### Задача 6
+
+Используя подходящий статистический критерий и датафрейм  `one_two`, проверьте, можно ли считать средние (медианные) значения числа продаж равными у тех фирм, которые использовали тип продвижения 1 и 2. Выбор критерия должен быть обоснован – приведены графики распределения, проверка нормальности распределений или рассуждения об объёмах выборок. Сделайте содержательные выводы на основе полученных результатов.
+
+**Подсказка:** функции `t.test()`, `wilcox.test()` и подобные могут принимать на вход формулы вида x ~ group, где x — тестируемый показатель, group — показатель, который содержит деление наблюдений на группы. Например, для встроенного в R датафрейма sleep можно запустить такой код:
+
+```
+t.test(extra ~ group, data = sleep)
+```
+```{r}
+shapiro.test(one_two$SalesInThousands[one_two$Promotion == '1'])
+shapiro.test(one_two$SalesInThousands[oюne_two$Promotion == '2'])
+
+wilcox.test(one_two$SalesInThousands ~ one_two$Promotion)
+
+#shapiro.test() показал, что распределение в обоих случаях не является нормальным.
+# Следовательно мы должны использовать wilcox.test(), применив данный тест на наших данных, мы увидели, что p-value = 3.228e-12. Данный показатель меньше чем 0.05, что дает нам возможность отвергнуть нулевую гипотезу о равенстве средних
+```
+
+### Задача 7
+
+Используя подходящий статистический критерий и датафрейм `marketing`, проверьте, можно ли считать средние (медианные) значения числа продаж равными у тех фирм, которые использовали тип продвижения 1-4. Выбор критерия должен быть обоснован — приведены графики распределения, проверка нормальности распределений или рассуждения об объёмах выборок. Сделайте содержательные выводы на основе полученных результатов.
+
+```{r}
+ggplot(marketing, aes(x = Promotion, y = SalesInThousands, group = Promotion, fill = Promotion)) +
+  geom_boxplot() +
+  labs(title = "Распределение продаж по типам продвижения", x = "Тип продвижения", y = "Продажи (в тысячах)") +
+  theme_minimal()
+
+shapiro.test(marketing$SalesInThousands[marketing$Promotion == '1'])
+shapiro.test(marketing$SalesInThousands[marketing$Promotion == '2'])
+shapiro.test(marketing$SalesInThousands[marketing$Promotion == '3'])
+
+kraskal <- kruskal.test(marketing$SalesInThousands ~ marketing$Promotion)
+kraskal
+
+#Для того чтобы доказать или опровергнуть нашу гипотезу о равенстве. Я провел shapiro.test по каждому типу продвижения, который показал p-value практически равный 0, что говорит нам о не нормальном распределении.
+#Это делает использование параметрических тестов, таких как ANOVA, неподходящим.
+#Далее я провел kruskal.test, так как у нас не нормальное распределение, который показал p-value практически равный 0.
+#Исходя из полученных резульатов можно сделать вывод, что считать средние (медианные) значения числа продаж равными у тех фирм, которые использовали тип продвижения 1-4 нельзя, что и показал нам kruskal.test и график распределения
+#В задании написано проверить тип продвижения 1-4, но тип продвижения 4 отсутсвует, поэтому тесты проводились лишь на типах: 1,2,3
+```
+
+
+### Задача 8 
+
+Загрузите данные из файла `library-ab-interact.csv` и сохраните их в датафрейм `lib_int`. Загрузите данные из файла `library-ab-services.csv` и сохраните их в датафрейм `lib_serv`.
+
+```{r}
+setwd("C:/Users/alimb/OneDrive/Рабочий стол/test")
+lib_int <- read.csv('library-ab-interact.csv')
+lib_serv <- read.csv('library-ab-services.csv')
+```
+
+
+### Задача 9 
+
+Используя библиотеку `tidyverse`, сделайте так, чтобы столбец Name в датафрейме `lib_int` содержал значения FIND, REQUEST, INTERACT, OTHER, а столбец Name в датафрейме `lib_serv` — значения FIND, REQUEST, SERVICES, OTHER (OTHER для всех остальных названий).
+```{r}
+lib_int <- lib_int %>% mutate(Name = ifelse(Name %in% c('FIND', 'REQUEST', 'INTERACT'), Name, 'OTHER'))
+lib_serv <- lib_serv %>% mutate(Name = ifelse(Name %in% c('FIND', 'REQUEST', 'SERVICES'), Name, 'OTHER'))
+```
+
+
+### Задача 10 
+
+Используя библиотеку `ggplot2`, постройте две круговые диаграммы. Первая диаграмма должна показывать проценты кликов на заголовки FIND, REQUEST, INTERACT, OTHER, а вторая диаграмма — проценты кликов на заголовки FIND, REQUEST, SERVICES, OTHER. Можно ли сказать, что на заголовок SERVICES кликают чаще, чем на INTERACT? Приведите ответ на вопрос.
+```{r}
+int_clicks <- lib_int %>%
+  group_by(Name) %>%
+  summarise(TotalClicks = sum(No..clicks)) %>%
+  mutate(Percent = TotalClicks / sum(TotalClicks) * 100)
+
+serv_clicks <- lib_serv %>%
+  group_by(Name) %>%
+  summarise(TotalClicks = sum(No..clicks)) %>%
+  mutate(Percent = TotalClicks / sum(TotalClicks) * 100)
+
+
+ggplot(int_clicks, aes(x ="", y = Percent, fill = Name)) +
+  geom_bar(stat = "identity", width = 1) +
+  coord_polar("y") +
+  geom_text(aes(label = paste0(round(Percent, 2), "%")), position = position_stack(vjust = 0.5)) +
+  labs(title = "Проценты кликов (INTERACT)") +
+  theme_void()
+
+
+ggplot(serv_clicks, aes(x = "", y = Percent, fill = Name)) +
+  geom_bar(stat = "identity", width = 1) +
+  coord_polar("y") +
+  geom_text(aes(label = paste0(round(Percent, 2), "%")), position = position_stack(vjust = 0.5)) +
+  labs(title = "Проценты кликов (SERVICES)") +
+  theme_void()
+
+#Исходя из резульатов круговых диаграмм, нельзя точно сказать, какой критерий кликают чаще, так как у нас мало результатов в таблицах(69 и 53) и количество кликов на SERVICES и на INTERACT составляет маленькое число процентов, тем самым любой клик на одну из этих категорий может резко повысить процент.
+```
+
+
+### Задача 11
+
+Используя подходящий статистический критерий, проверьте, можно ли считать, что на заголовок SERVICES кликают чаще, чем на заголовок INTERACT. Сделайте содержательные выводы на основе полученных результатов. Можно ли считать, что выбор заголовка SERVICES для ссылки на страницу услуг библиотеки будет более удачным, чем использование текущего заголовка INTERACT?
+```{r}
+int_clicks_k <- sum(lib_int$No..clicks[lib_int$Name == 'INTERACT'])
+serv_clicks_k <- sum(lib_serv$No..clicks[lib_serv$Name == 'SERVICES'])
+
+total_int <- sum(lib_int$No..clicks)
+total_serv <- sum(lib_serv$No..clicks)
+
+result <- prop.test(c(int_clicks_k, serv_clicks_k), c(total_int, total_serv), alternative = 'less')
+print(result)
+
+#Очень низкое p-value позволяет с уверенностью говорить, что заголовок SERVICES получает больше кликов по сравнению с INTERACT;
+#Оценка доли кликов показывает, что у SERVICES (prop 2 = 0.03338) доля кликов выше, чем у INTERACT (prop 1 = 0.01108);
+#На основании этих данных можно утверждать, что использование заголовка SERVICES для ссылки на страницу услуг библиотеки будет более удачным решением.
+```
+

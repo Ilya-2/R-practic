@@ -1,0 +1,106 @@
+# Задачи
+
+## Задача 1
+
+Загрузите данные с листа `Rental` файла *Texas Rental* и сохраните их в датафрейм `rental`.
+
+```{r}
+library(googlesheets4)
+
+rental <- read_sheet(ss = 'https://docs.google.com/spreadsheets/d/1MGc0iqP_XSDN-BcJjnnGg3GEXXXl45AoKldDgy5x9PI/edit?gid=0#gid=0')
+```
+
+
+## Задача 2
+Преобразуйте столбец `average_rate_per_night` таким образом, чтобы он содержал только числа без символа `$` и имел целочисленный тип.
+
+**Подсказка.** Если планируете избавляться от символов `$` с помощью замены, обратите внимание на то, что этот символ является специальным оператором в регулярных выражениях, поэтому его необходимо экранировать с помощью `\\`.
+
+```{r}
+library(tidyverse)
+
+rental <- rental %>% mutate(average_rate_per_night = as.integer(gsub("\\$", "", average_rate_per_night)))
+```
+
+
+## Задача 3
+
+Замените значения *Studio* в столбце `bedrooms_count` на значения 0 и преобразуйте тип этого столбца в целочисленный.
+
+```{r}
+rental <- rental %>% mutate(bedrooms_count = as.integer(ifelse(bedrooms_count == 'Studio', 0, bedrooms_count)))
+```
+
+
+## Задача 4
+
+Разбейте столбец `date_of_listing` на два столбца, `month_listing` и `year_listing`. Столбец `month_listing` должен содержать месяц добавления жилого объекта на Airbnb (строковый тип), а столбец `year_listing` должен содержать год добавления жилого объекта на Airbnb (целочисленный тип).
+
+```{r}
+rental <- rental %>% separate(col = date_of_listing, into = c('month_listing', 'year_listing'))
+rental <- rental %>% mutate(year_listing = as.integer(year_listing))
+str(rental)
+```
+
+
+## Задача 5
+
+Загрузите данные с листа *Texas* файла *Texas Rental* и сохраните их в датафрейм `texas`.
+
+```{r}
+texas <- read_sheet(ss = 'https://docs.google.com/spreadsheets/d/1MGc0iqP_XSDN-BcJjnnGg3GEXXXl45AoKldDgy5x9PI/edit?gid=0#gid=0', sheet = 'Texas')
+```
+
+
+## Задача 6
+
+Проверьте тип столбца `population`. Если тип не числовой, исправьте это.
+```{r}
+str(texas)
+
+texas <- texas %>% mutate(population = as.numeric(population))
+str(texas)
+```
+
+
+## Задача 7
+
+Объедините датафреймы `rental` и `texas` таким образом, чтобы в итоговом датафрейме были данные по всем представленным на Airbnb жилым объектам в Техасе и для каждого жилого объекта была указана численность населения в городе, где он находится. Назовите полученный датафрейм `final`.
+```{r}
+final <- left_join(rental, texas, by = 'city')
+```
+
+
+## Задача 8
+
+Удалите строки с пропущенными значениями в датафрейме `final`.
+```{r}
+final <- final %>% na.omit
+```
+
+
+## Задача 9
+
+Выберите 10 самых крупных по численности населения городов штата Техас, используя только датафрейм `final`.
+
+**Подсказка.** Может пригодиться функция `distinct` для выбора уникальных значений.
+```{r}
+top_10 <- final %>% distinct(city, .keep_all = TRUE) %>% arrange(desc(population)) %>% head(10)
+```
+
+
+## Задача 10
+
+Сгруппируйте строки в датафрейме `final` по названию города и сформируйте таблицу с минимальной и максимальной средней ценой аренды за ночь для 10 самых крупных по численности населения городов штата Техас. Сохраните результат в переменную `texas_sum`.
+```{r}
+texas_sum <- final %>% filter(city %in% top_10$city) %>% group_by(city) %>% summarise(min_rate = min(average_rate_per_night), max_rate = max(average_rate_per_night))
+```
+
+
+## Задача 11
+
+Измените структуру таблицы `texas_sum` таким образом, чтобы в таблице было два столбца: название города и минимальная/максимальная средняя цена аренды за ночь (одно значение под другим для каждого города, *long format*).
+```{r}
+texas_sum_long <- texas_sum %>% gather("type","rate", 2:3)
+```
+

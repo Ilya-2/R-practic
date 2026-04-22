@@ -1,0 +1,119 @@
+
+## Задача 1
+
+Загрузите данные из файла `winemag-data.csv` и сохраните их в датафрейм `wine`.
+```{r}
+setwd("C:/Users/alimb/OneDrive/Рабочий стол/test")
+wine <- read.csv('winemag-data.csv')
+```
+
+
+## Задача 2
+
+Выберите строки, которые соответствуют винам, произведённым во Франции, и сохраните их в датафрейм `wine_fr`.
+```{r}
+library(tidyverse)
+
+wine_fr <- wine %>% filter(country == 'France')
+```
+
+
+## Задача 3
+
+Используя библиотеку `plotly` и датафрейм `wine_fr`, постройте диаграмму рассеивания, которая показывала бы связь между количеством баллов, поставленных вину экспертом, и стоимостью бутылки этого вина. Измените цвет и размер точек, добавьте содержательные подписи по осям и заголовок графика.
+```{r}
+library(plotly)
+
+zadacha_3 <- plot_ly(data = wine_fr, 
+                     x = ~points, 
+                     y = ~price, 
+                     type = 'scatter', 
+                     mode = 'markers',  
+                     marker = list(color = 'green', size = 5)) %>%
+  layout(title = 'Связь между кол-ом баллов и стоимостью бутылки',
+         xaxis = list(title = 'Кол-во баллов'),
+         yaxis = list(title = 'Стоимость бутылки'))
+
+zadacha_3
+
+```
+
+
+## Задача 4
+
+На основе диаграммы рассеивания из задачи 3 постройте другую диаграмму рассеивания — такую, где цвет точки зависит от провинции, в которой было произведено вино. Измените цветовую палитру (выберите на своё усмотрение).
+```{r}
+zadacha_4 <- plot_ly(data = wine_fr, x = ~points, y = ~price, type = 'scatter', 
+                     mode = 'markers', color = ~province, colors = "Paired")
+zadacha_4
+```
+
+
+## Задача 5
+
+Сохраните в датафрейм `wine_90plus` строки, которые соответствуют винам из Италии, Испании и Франции, набравшим более 90 баллов по оценкам экспертов.
+```{r}
+filter_country <- c('Italy', 'Spain', 'France')
+wine_90plus <- wine %>% filter(country %in% filter_country & points > 90)
+```
+
+
+## Задача 6
+
+Используя библиотеку `plotly` и датафрейм `wine90_plus`, постройте интерактивную визуализацию, которая включает следующие элементы:
+
+* выпадающее меню с выбором страны происхождения вина (Италия, Испания, Франция);
+* выпадающее меню с выбором цвета заливки гистограммы (любые пять цветов на выбор);
+* гистограмму для стоимости бутылки вина в той стране, которую выбрал пользователь.
+
+Гистограмма должна строиться по той части датафрейма, которая соответствует определённой стране. 
+
+**Подсказка:** удобнее всего создать три разных датафрейма (для вин Италии, Испании и Франции), а затем воспользоваться аргументом `data` в функции `add_trace()`.
+
+```{r}
+wine_90_Italy <- wine_90plus %>% filter(country == 'Italy')
+wine_90_Spain <- wine_90plus %>% filter(country == 'Spain')
+wine_90_France <- wine_90plus %>% filter(country == 'France')
+
+zadacha_6 <- plot_ly(data = wine_90_Italy, x = ~price, type = 'histogram', name = 'Price in Italy')
+zadacha_6 <- zadacha_6 %>% add_trace(data = wine_90_Spain, x = ~price, name = 'Price in Spain', visible = FALSE)
+zadacha_6 <- zadacha_6 %>% add_trace(data = wine_90_France, x = ~price, name = 'Price in France', visible = FALSE)
+
+zadacha_6 <- zadacha_6 %>% layout(
+  title = "<b>The price of wine</b>",
+  updatemenus = list(
+    list(
+      x = -0.5,
+      y = 1,
+      buttons = list(
+        list(method = "restyle",
+             args = list("visible", list(TRUE, FALSE, FALSE)),
+             label = "Italy"),
+        list(method = "restyle",
+             args = list("visible", list(FALSE, TRUE, FALSE)),
+             label = "Spain"),
+        list(method = "restyle",
+             args = list("visible", list(FALSE, FALSE, TRUE)),
+             label = "France"))),
+    list(
+      x = -0.5,
+      y = 0.9,
+      buttons = list(
+        list(method = "restyle",
+             args = list("marker.color", "blue"),
+             label = "Blue"),
+        list(method = "restyle",
+             args = list("marker.color", "pink"),
+             label = "Pink"),
+        list(method = "restyle",
+             args = list("marker.color", "gold"),
+             label = "Gold"),
+        list(method = "restyle",
+             args = list("marker.color", "green"),
+             label = "Green"),
+        list(method = "restyle",
+             args = list("marker.color", "red"),
+             label = "Red")))))
+zadacha_6
+```
+
